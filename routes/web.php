@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/auth/password', 'Auth\Password\PasswordController@index')->name('auth.password.change');
+Route::patch('/auth/password', 'Auth\Password\PasswordController@update');
