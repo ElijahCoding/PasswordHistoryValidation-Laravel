@@ -58,6 +58,13 @@ class User extends Authenticatable
         $this->passwordHistory()->create(compact('password'));
     }
 
+    public function deletePasswordHistory($keep = 5)
+    {
+        $this->passwordHistory()
+            ->where('id', '<=', $this->passwordHistory()->first()->id - $keep)
+            ->delete();
+    }
+
     public function passwordHistory()
     {
         return $this->hasMany(PasswordHistory::class)
