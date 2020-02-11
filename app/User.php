@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable
 {
@@ -36,6 +37,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updated(function($user) {
+            if ($password = Arr::get($user->getChanges(), 'password')) {
+                $user->storeCurrentPasswordInHistory($user->password);
+            }
+        });
+
+        self::created(function($user) {
+            $user->storeCurrentPasswordInHistory($user->password);
+        });
+    }
+
+    protected function storeCurrentPasswordInHistory($password)
+    {
+        $this->passwordHistory()->create(compact('password'));
+    }
 
     public function passwordHistory()
     {

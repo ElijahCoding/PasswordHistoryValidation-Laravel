@@ -27,7 +27,7 @@
                                     <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" autofocus>
 
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Password;
 
+use App\Rules\NotFromPasswordHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,8 @@ class PasswordController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required'
+            'required',
+            new NotFromPasswordHistory($request->user(), 3)
         ]);
 
         $request->user()->update([
