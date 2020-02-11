@@ -1,4 +1,4 @@
-@extends('Downloads.laravel-password-history-validation-starter.resources.views.layouts.app')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">

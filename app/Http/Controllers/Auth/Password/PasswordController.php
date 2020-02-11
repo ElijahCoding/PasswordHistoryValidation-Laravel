@@ -28,11 +28,6 @@ class PasswordController extends Controller
         return view('auth.passwords.change');
     }
 
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
     public function update(Request $request)
     {
         $this->validate($request, [
